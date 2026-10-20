@@ -1,3 +1,3 @@
 #!/bin/sh
-docker rm -f db
+docker rm -fv db
 docker network rm assignment-net
