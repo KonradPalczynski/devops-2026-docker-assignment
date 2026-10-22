@@ -35,3 +35,16 @@ docker run --name seeder --net assignment-net \
     -e SQLITE_FILE=/app/Chinook.db \
     -e DATABASE_URL=postgres://admin:konrad4564@db:5432/musicdb \
    seeder-image
+
+docker run -d --net assignment-net \
+  --name gateway \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "$(pwd)/mcp_config.yaml:/mcp_config.yaml" \
+  -v "$(pwd)/mcp_secret.env:/run/secrets/database-url" \
+  docker/mcp-gateway:latest \
+  --transport=sse \
+  --secrets=/run/secrets/database-url \
+  --allow-unauthenticated \
+  --servers=cockroachdb \
+  --tools=execute_query \
+  --config=/mcp_config.yaml 
