@@ -50,3 +50,5 @@ docker run -d --net assignment-net \
   --servers=cockroachdb \
   --tools=execute_query \
   --config=/mcp_config.yaml 
+
+docker build --target agent -t agent-image .
