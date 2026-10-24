@@ -10,3 +10,5 @@ docker rmi seeder-image
 docker rm -fv gateway
 
 docker rmi agent-image
+
+docker rm -fv agent 
