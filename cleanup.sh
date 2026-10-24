@@ -8,3 +8,5 @@ docker network rm assignment-net
 docker rmi seeder-image
 
 docker rm -fv gateway
+
+docker rmi agent-image
