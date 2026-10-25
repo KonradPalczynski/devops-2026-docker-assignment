@@ -32,7 +32,7 @@ until docker exec db pg_isready -U admin -d musicdb >/dev/null 2>&1; do
 done
 log "Postgres is ready."
 
-docker run --name seeder --net assignment-net \
+docker run --rm --name seeder --net assignment-net \
     -v "$(pwd)/Chinook.db:/app/Chinook.db:ro" \
     -e SQLITE_FILE=/app/Chinook.db \
     -e DATABASE_URL=postgres://admin:konrad4564@db:5432/musicdb \
@@ -57,7 +57,7 @@ log "Gateway should be ready"
 
 docker build --target agent -t agent-image .
 
-docker run --name agent --net assignment-net \
+docker run --rm --name agent --net assignment-net \
   -v "$(pwd)/secret.ollama-api-key:/run/secrets/openai-api-key:ro" \
   -e MCP_SERVER_URL=http://gateway:8811/sse \
   -e DATABASE_DIALECT=PostgreSQL \
