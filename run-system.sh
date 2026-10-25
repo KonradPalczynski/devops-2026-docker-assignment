@@ -51,6 +51,10 @@ docker run -d --net assignment-net \
   --tools=execute_query \
   --config=/mcp_config.yaml 
 
+log "Waiting 45s for gateway to start..."
+sleep 45
+log "Gateway should be ready"
+
 docker build --target agent -t agent-image .
 
 docker run --name agent --net assignment-net \
