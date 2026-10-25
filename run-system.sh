@@ -24,7 +24,7 @@ log "Waiting up to ${WAIT_TIMEOUT}s for Postgres..."
 elapsed=0
 until docker exec db pg_isready -U admin -d musicdb >/dev/null 2>&1; do
   elapsed=$((elapsed + 1))
-  if [ "elapsed" -ge "$WAIT_TIMEOUT"]; then
+  if [ "$elapsed" -ge "$WAIT_TIMEOUT" ]; then
     log "ERROR: Postgres not ready after ${WAIT_TIMEOUT}s."
     exit 1
   fi
