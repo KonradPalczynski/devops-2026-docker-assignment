@@ -33,7 +33,7 @@ done
 log "Postgres is ready."
 
 docker run --name seeder --net assignment-net \
-    -v "$(pwd)/Chinook.db:/app/Chinook.db" \
+    -v "$(pwd)/Chinook.db:/app/Chinook.db:ro" \
     -e SQLITE_FILE=/app/Chinook.db \
     -e DATABASE_URL=postgres://admin:konrad4564@db:5432/musicdb \
    seeder-image
@@ -41,8 +41,8 @@ docker run --name seeder --net assignment-net \
 docker run -d --net assignment-net \
   --name gateway \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "$(pwd)/mcp_config.yaml:/mcp_config.yaml" \
-  -v "$(pwd)/mcp_secret.env:/run/secrets/database-url" \
+  -v "$(pwd)/mcp_config.yaml:/mcp_config.yaml:ro" \
+  -v "$(pwd)/mcp_secret.env:/run/secrets/database-url:ro" \
   docker/mcp-gateway:latest \
   --transport=sse \
   --secrets=/run/secrets/database-url \
@@ -58,7 +58,7 @@ log "Gateway should be ready"
 docker build --target agent -t agent-image .
 
 docker run --name agent --net assignment-net \
-  -v "$(pwd)/secret.ollama-api-key:/run/secrets/openai-api-key" \
+  -v "$(pwd)/secret.ollama-api-key:/run/secrets/openai-api-key:ro" \
   -e MCP_SERVER_URL=http://gateway:8811/sse \
   -e DATABASE_DIALECT=PostgreSQL \
   -e QUESTION="What are the top 3 albums by sales?" \
