@@ -3,7 +3,7 @@ docker rm -fv agent
 
 docker rm -fv gateway
 
-docker rm -f seeder
+docker rm -fv seeder
 
 docker rm -fv db
 
